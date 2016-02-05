@@ -23,11 +23,11 @@ h1, .h1, h2, .h2, h3, .h3 {
   background:#505559;
 }
 #logo a {
-  color: #D8D8D8;
-font-family: "Righteous",cursive;
-display: block;
-font-size: 20px;
-line-height: 50px;
+  color: #FFF;
+  font-family: "Righteous",cursive;
+  display: block;
+  font-size: 23px;
+  line-height: 50px;
   background: url(../img/logo.png) right 42px no-repeat;
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;
