@@ -1,0 +1,23 @@
+commit 9040469aac729062537886e17ffb0e9422f08c30
+Author: Miguel Chin-xay <miguel.peru.seo@gmail.com>
+Date:   Thu Feb 4 22:51:57 2016 -0500
+
+    Tamanio letra logo
+
+commit 50c4018709727c137f9f8be02d4e6522427102ac
+Author: Miguel Chin-xay <miguel.peru.seo@gmail.com>
+Date:   Thu Feb 4 22:47:34 2016 -0500
+
+    Cambio de logo
+
+commit 2251d48de7a5560119af6d605e98b585af4aa546
+Author: Miguel Chin-xay <miguel.peru.seo@gmail.com>
+Date:   Thu Feb 4 22:39:25 2016 -0500
+
+    Mas archivos agregados
+
+commit e9f947d6dc8acf4075080b92a76dcacd4e3b7588
+Author: Miguel Chin-xay <miguel.peru.seo@gmail.com>
+Date:   Thu Feb 4 22:35:43 2016 -0500
+
+    Iniciamos subida de archivos
