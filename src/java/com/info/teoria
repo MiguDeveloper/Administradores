@@ -1,0 +1,15 @@
+a) static: los atributos miembros de una clase pueden ser atributos de clase o atributos de 
+instancia; se dice que son atributos de clase si se usa la palabra clave static: en ese caso 
+la variable es única para todas las instancias (objetos) de la clase (ocupa un único lugar en memoria). 
+A veces a las variables de clase se les llama variables estáticas. Si no se usa static, el sistema crea un 
+lugar nuevo para esa variable con cada instancia (la variable es diferente para cada objeto). En el caso de una 
+constante no tiene sentido crear un nuevo lugar de memoria por cada objeto de una clase que se cree. Por 
+ello es adecuado el uso de la palabra clave static. Cuando usamos “static final” se dice que creamos una 
+constante de clase, un atributo común a todos los objetos de esa clase.
+
+b) final: en este contexto indica que una variable es de tipo constante: no admitirá cambios 
+después de su declaración y asignación de valor. final determina que un atributo no puede ser 
+sobreescrito o redefinido. O sea: no funcionará como una variable “tradicional”, sino como una constante. 
+Toda constante declarada con final ha de ser inicializada en el mismo momento de declararla. final también 
+se usa como palabra clave en otro contexto: una clase final (final) es aquella que no puede tener clases 
+que la hereden. Lo veremos más adelante cuando hablemos sobre herencia.
