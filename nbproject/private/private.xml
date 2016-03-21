@@ -3,10 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/Users/miguelchinchay/Documents/Proyectos%20Java/Administradores/src/java/Servlet/tblConexionServlet.java</file>
             <file>file:/Users/miguelchinchay/Documents/Proyectos%20Java/Administradores/src/java/Bean/tblConexionBean.java</file>
             <file>file:/Users/miguelchinchay/Documents/Proyectos%20Java/Administradores/src/java/DaoImpl/tblConexionDAOImpl.java</file>
             <file>file:/Users/miguelchinchay/Documents/Proyectos%20Java/Administradores/web/tblConexion.jsp</file>
+=======
+            <file>file:/Users/miguelchinchay/Documents/Proyectos%20Java/Administradores/web/index_v1.html</file>
+            <file>file:/Users/miguelchinchay/Documents/Proyectos%20Java/Administradores/web/css/style_v2.css</file>
+            <file>file:/Users/miguelchinchay/Documents/Proyectos%20Java/Administradores/web/ajax/dashboard.html</file>
+>>>>>>> master
         </group>
     </open-files>
 </project-private>
