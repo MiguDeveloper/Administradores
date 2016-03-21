@@ -22,9 +22,9 @@ public class tblConexionServiceImpl implements tblConexionService{
     }
 
     @Override
-    public List<tblConexionBean> buscar(String ape_paterno) {
+    public List<tblConexionBean> buscar(String ape_paterno, int numPaginaInicio, int numPaginaFin) {
         tblConexionDAO = new tblConexionDAOImpl();
-        return tblConexionDAO.buscar(ape_paterno);
+        return tblConexionDAO.buscar(ape_paterno, numPaginaInicio, numPaginaFin);
     }
 
     @Override
@@ -43,6 +43,12 @@ public class tblConexionServiceImpl implements tblConexionService{
     public tblConexionBean obtnerPorId(int id) {
         tblConexionDAO = new tblConexionDAOImpl();
         return tblConexionDAO.obtnerPorId(id);
+    }
+
+    @Override
+    public int totalFilasTbl() {
+        tblConexionDAO = new tblConexionDAOImpl();
+        return tblConexionDAO.totalFilasTbl();
     }
     
 }

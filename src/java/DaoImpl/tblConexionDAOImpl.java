@@ -4,7 +4,7 @@ package DaoImpl;
 
 import Bean.tblConexionBean;
 import Dao.tblConexionDAO;
-import com.util.Conexion;
+import util.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,9 +61,9 @@ public class tblConexionDAOImpl implements tblConexionDAO{
     }
 
     @Override
-    public List<tblConexionBean> buscar(String ape_paterno) {
+    public List<tblConexionBean> buscar(String ape_paterno, int numPaginaInicio, int numPaginaFin) {
         logger.info("Listando tblConexion");
-        sql = "CALL SP_LISTAR_TBLCONEXION(?)";
+        sql = "CALL SP_LISTAR_TBLCONEXION(?,?,?)";
         
         List<tblConexionBean> lsttblConexion = null;
         tblConexionBean tblConexion = null;
@@ -74,11 +74,14 @@ public class tblConexionDAOImpl implements tblConexionDAO{
             
             ps = cn.prepareStatement(sql);
             ps.setString(1, ape_paterno);
+            ps.setInt(2, numPaginaInicio);
+            ps.setInt(3, numPaginaFin);
             
             rs = ps.executeQuery();
             lsttblConexion = new ArrayList<tblConexionBean>(); 
             while(rs.next()){
                 tblConexion = new tblConexionBean();
+                tblConexion.setID(rs.getInt("ID"));
                 tblConexion.setNOMBRE(rs.getString("NOMBRE"));
                 tblConexion.setAPE_PATERNO(rs.getString("APE_PATERNO"));
                 tblConexion.setAPE_MATERNO(rs.getString("APE_MATERNO"));
@@ -180,6 +183,29 @@ public class tblConexionDAOImpl implements tblConexionDAO{
         
         return tblConexion;
        
+    }
+
+    @Override
+    public int totalFilasTbl() {
+        logger.info("Obteniendo el total");
+        sql = "CALL SP_TOTAL_TABLA()";
+        
+        int numTotal = 0;
+        try{
+            con = new Conexion();
+            cn = con.getConexion();
+            ps = cn.prepareStatement(sql);
+            
+            rs = ps.executeQuery();
+            while(rs.next()){
+                numTotal = rs.getInt("TOTAL");
+            }
+        }catch(Exception e){
+            logger.error("Error al obtener totales: " + e.getMessage());
+        }finally{
+            con.cerrarConexion(cn);
+        }
+        return numTotal;
     }
     
 }
