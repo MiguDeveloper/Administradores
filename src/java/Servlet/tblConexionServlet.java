@@ -77,9 +77,9 @@ public class tblConexionServlet extends HttpServlet {
         logger.info("Insertando tblConexion");
         sesion = request.getSession();
         
-        String nombres = request.getParameter("txtNombres") == null ? "" : request.getParameter("txtNombres");
-        String ape_paterno = request.getParameter("txtApe_Paterno") == null ? "" : request.getParameter("txtApe_Paterno");
-        String ape_materno = request.getParameter("txtApe_Materno") == null ? "" : request.getParameter("txtApe_Materno");
+        String nombres = request.getParameter("txtNombre") == null ? "" : request.getParameter("txtNombre");
+        String ape_paterno = request.getParameter("txtApe_paterno") == null ? "" : request.getParameter("txtApe_paterno");
+        String ape_materno = request.getParameter("txtApe_materno") == null ? "" : request.getParameter("txtApe_materno");
         
         try{
             tblConexion = new tblConexionBean();
@@ -174,7 +174,7 @@ public class tblConexionServlet extends HttpServlet {
         logger.info("Obteniendo por ID");
         sesion = request.getSession();
         
-        int id = Integer.parseInt(request.getParameter("Id") == null ? "1" : request.getParameter("Id"));
+        int id = Integer.parseInt(request.getParameter("id") == null ? "1" : request.getParameter("id"));
         
         try{
             tblConexion = new tblConexionBean();
