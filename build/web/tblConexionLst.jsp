@@ -262,7 +262,7 @@
             };
 
             $(document).ready(function() {
-                console.log("Estoy en el lst");
+                
                 tbl = $('#list');
                 frm = $('#frmBusqueda');
                 tblEstructura();

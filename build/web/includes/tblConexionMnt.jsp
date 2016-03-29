@@ -50,21 +50,18 @@
             <div class="form-group">
                 <div class="col-xs-12"> 
                     <button type="submit" class="btn btn-default">Aceptar</button>
-                    <button type="button" onclick='BtnCancelar()' class="btn btn-default">Cancelar</button>
+                    <button type="button" onclick="BtnCancelar()" class="btn btn-default">Cancelar</button>
                 </div>
             </div>  
         </form>
 
+
         <%@include file="js.jsp" %>
 
-        <script type="text/javascript">
-            var BtnCancelar = function() {
-                window.parent.cierra();
-            };
-            
+        <script type='text/javascript'>
+
             $(document).ready(function() {
-                console.log("hola")
-                $('#frmClientes').validate({
+                $("#frmClientes").validate({
                     rules: {
                         txtNombre: {required: true},
                         txtApePaterno: {required: true},
@@ -115,7 +112,7 @@
                             }
                         });
                     }
-                })
+                });
             });
         </script>
     </body>

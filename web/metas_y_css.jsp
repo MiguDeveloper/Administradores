@@ -21,7 +21,7 @@
 <link rel="stylesheet" type="text/css" href="css/jqgrid/ui.jqgrid.css"/>
 
 <!-- jqGrid and jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jqgrid/jquery-1.11.0.min.js"></script>
+<script src="plugins/jquery/jquery-1.11.3.min.js"></script>
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 
 <!-- jqGrid -->
