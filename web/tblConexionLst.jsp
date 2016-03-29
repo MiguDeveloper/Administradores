@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Primera Tabla</title>
+        <title>Lista de clientes</title>
 
         <%@include file="metas_y_css.jsp" %>
 
@@ -113,6 +113,7 @@
         <%@include file="librerias_javascript.jsp" %>
 
         <script type='text/javascript'>
+            
             $.jgrid.no_legacy_api = true;
             $.jgrid.useJSON = true;
 

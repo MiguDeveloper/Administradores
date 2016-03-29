@@ -32,19 +32,19 @@
             <div class="form-group">
                 <label for="txtNombre" class="col-xs-3 control-label">Nombres</label>
                 <div class="col-xs-9">
-                    <input type="text" class="form-control" id="txtNombre" value="<%=Nombres%>" placeholder="nombres">
+                    <input type="text" class="form-control" id="txtNombre" name="txtNombre" value="<%=Nombres%>" placeholder="nombres">
                 </div>
             </div>
             <div class="form-group">
                 <label for="txtApePaterno" class="col-xs-3 control-label">Apellido Paterno</label>
                 <div class="col-xs-9">
-                    <input type="text" class="form-control" id="txtApePaterno" value="<%=apePaterno%>" placeholder="apellido paterno">
+                    <input type="text" class="form-control" id="txtApePaterno" name="txtApePaterno" value="<%=apePaterno%>" placeholder="apellido paterno">
                 </div>
             </div>
             <div class="form-group">
                 <label for="txtApeMaterno" class="col-xs-3 control-label">Apellido Materno</label>
                 <div class="col-xs-9">
-                    <input type="text" class="form-control" id="txtApeMaterno" value="<%=apeMaterno%>" placeholder="apellido materno">
+                    <input type="text" class="form-control" id="txtApeMaterno" name="txtApeMaterno" value="<%=apeMaterno%>" placeholder="apellido materno">
                 </div>
             </div>
             <div class="form-group">
@@ -59,6 +59,9 @@
         <%@include file="js.jsp" %>
 
         <script type='text/javascript'>
+            function BtnCancelar() {
+                window.parent.cierra();
+            }
 
             $(document).ready(function() {
                 $("#frmClientes").validate({

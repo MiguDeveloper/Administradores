@@ -23,7 +23,6 @@
             <div class="modal-body" id="modal-body-gen">
                   
             </div>
-
         </div>
         <!-- /.modal-content -->
     </div>

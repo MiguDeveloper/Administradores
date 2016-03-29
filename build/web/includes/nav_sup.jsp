@@ -6,15 +6,9 @@
             </div>
             <div id="top-panel" class="col-xs-12 col-sm-10">
                 <div class="row">
-                    <div class="col-xs-8 col-sm-4">
-                        <div id="search">
-                            <input type="text" placeholder="search"/>
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </div>
+                    
                     <div class="col-xs-4 col-sm-8 top-panel-right">
-                        <a href="#" class="about">about</a>
-                        <a href="index_v1.html" class="style1"></a>
+                        
                         <ul class="nav navbar-nav pull-right panel-menu">
                             <li class="hidden-xs">
                                 <a href="index.html" class="modal-link">
