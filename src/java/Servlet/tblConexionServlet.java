@@ -90,6 +90,7 @@ public class tblConexionServlet extends HttpServlet {
             tblConexionService = new tblConexionServiceImpl();
             flgOperacion = tblConexionService.insertar(tblConexion);
             
+            String estadoOperacion = "";
             if(flgOperacion>0){
                 mensaje = "Se creo con éxito el usuario";
                 estadoOperacion = "1";
@@ -256,6 +257,8 @@ public class tblConexionServlet extends HttpServlet {
         try{
             tblConexionService = new tblConexionServiceImpl();
             flgOperacion = tblConexionService.eliminar(id);
+            
+            String estadoOperacion = "";
             if(flgOperacion>0){
                 mensaje = "Se elimino con éxito";
                 estadoOperacion = "1";
