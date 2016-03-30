@@ -204,12 +204,14 @@ public class tblConexionServlet extends HttpServlet {
         logger.info("Actualizando tblConexion");
         sesion = request.getSession();
         
+        int id = Integer.parseInt(request.getParameter("id"));
         String nombre = request.getParameter("txtNombre") == null ? "" : request.getParameter("txtNombre");
         String ape_paterno = request.getParameter("txtApe_paterno") == null ? "" : request.getParameter("txtApe_paterno");
         String ape_materno = request.getParameter("txtApe_materno") == null ? "" : request.getParameter("txtApe_materno");
         
         try{
             tblConexion = new tblConexionBean();
+            tblConexion.setID(id);
             tblConexion.setNOMBRE(nombre);
             tblConexion.setAPE_PATERNO(ape_paterno);
             tblConexion.setAPE_MATERNO(ape_materno);
@@ -217,6 +219,8 @@ public class tblConexionServlet extends HttpServlet {
             tblConexionService = new tblConexionServiceImpl();
             
             flgOperacion = tblConexionService.actualizar(tblConexion);
+            String estadoOperacion = "";
+            
             if(flgOperacion>0){
                 mensaje = "Se actualizo con éxito la tblConexion";
                 estadoOperacion = "1";

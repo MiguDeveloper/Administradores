@@ -107,10 +107,11 @@ public class tblConexionDAOImpl implements tblConexionDAO{
             cn.setAutoCommit(false);
             
             cs = cn.prepareCall(sql);
+            
             cs.setInt(1, tblConexion.getID());
             cs.setString(2, tblConexion.getNOMBRE());
             cs.setString(3, tblConexion.getAPE_PATERNO());
-            cs.setString(4, tblConexion.getAPE_PATERNO());
+            cs.setString(4, tblConexion.getAPE_MATERNO());
             
             flgOperacion = cs.executeUpdate();
             if(flgOperacion>0){

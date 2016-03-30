@@ -26,9 +26,12 @@
                 tipoAccion = "insertar";
             }
         %>
-
+        
+        <%@include file="mensajes.jsp" %>
+        
         <form class="form-horizontal" id="frmClientes">
             <input type="hidden" value="<%=tipoAccion%>" id="txtAccion">
+            
             <div class="form-group">
                 <label for="txtNombre" class="col-xs-3 control-label">Nombres</label>
                 <div class="col-xs-9">
@@ -83,9 +86,9 @@
                             data: {
                                 accion: $("#txtAccion").val(),
                                 id: <%=id%>,
-                                txtNombre: $("#txtNombre").val(),
-                                txtApe_paterno: $("#txtApePaterno").val(),
-                                txtApe_materno: $("#txtApeMaterno").val()
+                                txtNombre : $("#txtNombre").val(),
+                                txtApe_paterno : $("#txtApePaterno").val(),
+                                txtApe_materno : $("#txtApeMaterno").val()
                             },
                             success: function(response) {
                                 if (response.estadoOperacion == '1' && response.tipo_proceso == 'insertar') {
@@ -102,7 +105,7 @@
                                     setTimeout(function() {
                                         $('#ok').hide("fast");
                                     }, 1000);
-                                    $('#frmClientes')[0].reset();
+                                    
                                     window.parent.buscar();
                                 } else {
                                     $('#error').show("fast");
