@@ -1,20 +1,19 @@
 <%-- 
-    Document   : prueba
-    Created on : 23-mar-2016, 0:12:02
+    Document   : login
+    Created on : 01-abr-2016, 14:15:45
     Author     : miguelchinchay
 --%>
 
-<%
-    if (session.getAttribute("usuario") == null) {
-        response.sendRedirect("login.jsp");
-    }
-%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
-
-        <title>JSP Page</title>
-
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Ingresar al sistema</title>
+        
+        <%@include file="metas_y_css.jsp" %>
+        
     </head>
     <body>
         <div class="container-fluid">
@@ -26,7 +25,7 @@
                     <div class="box">
                         <div class="box-content">
                             <div class="text-center">
-                                <h3 class="page-header">DevOOPS Login Page</h3>
+                                <h3 class="page-header">Lesimm login</h3>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Username</label>
@@ -44,5 +43,8 @@
                 </div>
             </div>
         </div>
+        
+        <%@include file="librerias_javascript.jsp" %>
+        
     </body>
 </html>
