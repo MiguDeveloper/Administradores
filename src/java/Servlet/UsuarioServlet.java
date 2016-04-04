@@ -64,6 +64,10 @@ public class UsuarioServlet extends HttpServlet {
                 login(request, response);
                 return;
             }
+            if(accion.equals("cerrarSesion")){
+                cerrarSesion(request,response);
+                return;
+            }
             if (accion.equals("eliminarSesion")) {
                 eliminarSesion(request, response);
                 return;
@@ -277,19 +281,23 @@ public class UsuarioServlet extends HttpServlet {
             usuarioService = new UsuarioServiceImpl();
             usuario = usuarioService.login_usuario(user, pwd);
 
-            String msgLogin = "";
+            String estadoLogin = "";
+            String msgLogeo = "";
 
             if (usuario == null) {
-                msgLogin = "denegado";
+                estadoLogin = "denegado";
+                msgLogeo = "Usuario o contraseña invalidos";
             } else {
-                msgLogin = "aceptado";
+                estadoLogin = "aceptado";
+                msgLogeo = "Usuario valido";
                 sesion.removeAttribute("login");
                 sesion.setAttribute("login", usuario);
             }
 
             /* -----RETORNAMOS EL MENSAJE ENVIADO DEL SERVIDOR----- */
             Map<String, String> Mensaje = new LinkedHashMap<String, String>();
-            Mensaje.put("mensaje", msgLogin);
+            Mensaje.put("estadoLogeo", estadoLogin);
+            Mensaje.put("mensajeLogeo", msgLogeo);
             String json_data = null;
             json_data = new Gson().toJson(Mensaje);
 
@@ -300,6 +308,20 @@ public class UsuarioServlet extends HttpServlet {
         } catch (Exception e) {
             logger.error("Error al hacer login: " + e.getMessage());
         }
+    }
+    
+    protected void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("Cerrando sesion");
+        sesion = request.getSession();
+        
+        try{
+            sesion.removeAttribute("login");
+            sesion.invalidate();
+            response.sendRedirect("login.jsp");
+        }catch(Exception e){
+            logger.error("Error al cerrar sesion: " + e.getMessage());
+        }
+        
     }
 
     protected void eliminarSesion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

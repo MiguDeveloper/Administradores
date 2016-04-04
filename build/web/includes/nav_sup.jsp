@@ -1,3 +1,15 @@
+<%@page import="Bean.UsuarioBean" %>
+
+<%
+    UsuarioBean user = (UsuarioBean) session.getAttribute("login");    
+%>
+
+<script type="text/javascript">
+    function cerrarSesion(){
+        document.location = "UsuarioServlet?accion=cerrarSesion"
+    }
+</script>
+
 <header class="navbar">
     <div class="container-fluid expanded-panel">
         <div class="row">
@@ -36,7 +48,7 @@
                                     <i class="fa fa-angle-down pull-right"></i>
                                     <div class="user-mini pull-right">
                                         <span class="welcome">Bienvenido,</span>
-                                        <span>Miguel</span>
+                                        <span><%=user.getNOMBRES()%></span>
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -71,9 +83,9 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="javascript:cerrarSesion();">
                                             <i class="fa fa-power-off"></i>
-                                            <span>Logout</span>
+                                            <span>Cerrar sesión</span>
                                         </a>
                                     </li>
                                 </ul>

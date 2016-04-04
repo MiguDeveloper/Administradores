@@ -1,7 +1,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Bean.UsuarioBean" %>
-
+<%
+    if(session.getAttribute("login") == null){
+        response.sendRedirect("login.jsp");
+    }
+    %>
 <!DOCTYPE html>
 <html>
     <head>

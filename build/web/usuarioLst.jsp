@@ -289,11 +289,6 @@
                 frm = $('#frmBusqueda');
                 tblEstructura();
                 
-                frm.validate({
-                    submitHandler: function(form) {
-                        buscar();
-                    }
-                });
             });
             
         </script>
