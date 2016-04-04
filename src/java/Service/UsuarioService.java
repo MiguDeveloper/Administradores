@@ -15,4 +15,6 @@ public interface UsuarioService {
     public int eliminar(int id);
     
     public UsuarioBean obtenerPorId(int id);
+    
+    public UsuarioBean login_usuario(String usuario, String pwd);
 }

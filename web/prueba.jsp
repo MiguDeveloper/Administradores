@@ -4,11 +4,6 @@
     Author     : miguelchinchay
 --%>
 
-<%
-    if (session.getAttribute("usuario") == null) {
-        response.sendRedirect("login.jsp");
-    }
-%>
 <!DOCTYPE html>
 <html>
     <head>

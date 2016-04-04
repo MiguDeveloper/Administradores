@@ -44,5 +44,11 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuarioDAO = new UsuarioDaoImpl();
         return usuarioDAO.obtenerPorId(id);
     }
+
+    @Override
+    public UsuarioBean login_usuario(String usuario, String pwd) {
+        usuarioDAO = new UsuarioDaoImpl();
+        return usuarioDAO.login_usuario(usuario, pwd);
+    }
     
 }

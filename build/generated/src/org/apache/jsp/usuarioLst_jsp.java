@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 
-public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class usuarioLst_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -50,20 +50,13 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       _jspx_out = out;
       _jspx_resourceInjector = (org.glassfish.jsp.api.ResourceInjector) application.getAttribute("com.sun.appserv.jsp.resource.injector");
 
-      out.write('\n');
- 
-    if(session.getAttribute("usuario") == null){
-        response.sendRedirect("login.jsp");
-    }
-    
+      out.write("\n");
       out.write("\n");
       out.write("<!DOCTYPE html>\n");
-      out.write("\n");
       out.write("<html>\n");
       out.write("    <head>\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <title>Lista de clientes</title>\n");
-      out.write("\n");
+      out.write("        <title>Lista de usuarios</title>\n");
       out.write("        ");
       out.write("\n");
       out.write("<meta name=\"description\" content=\"Sistemas de administracion\">\n");
@@ -100,10 +93,8 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("<![endif]-->\n");
       out.write("\n");
       out.write("\n");
-      out.write("\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("\n");
       out.write("        ");
       out.write("<header class=\"navbar\">\n");
       out.write("    <div class=\"container-fluid expanded-panel\">\n");
@@ -194,8 +185,7 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("</header>\n");
       out.write("<!--End Header-->");
       out.write("\n");
-      out.write("\n");
-      out.write("\n");
+      out.write("        \n");
       out.write("        <!--Start Container-->\n");
       out.write("        <div id=\"main\" class=\"container-fluid\">\n");
       out.write("            <div class=\"row\">\n");
@@ -388,7 +378,7 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("                            </a>\n");
       out.write("                            <ol class=\"breadcrumb pull-left\">\n");
       out.write("                                <li><a href=\"index.html\">Home</a></li>\n");
-      out.write("                                <li><a href=\"#\">Primera tabla</a></li>\n");
+      out.write("                                <li><a href=\"#\">Lista de usuarios</a></li>\n");
       out.write("                            </ol>\n");
       out.write("                        </div>\n");
       out.write("                    </div>\n");
@@ -478,8 +468,7 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("            </div>\n");
       out.write("        </div>\n");
       out.write("        <!--End Container-->\n");
-      out.write("\n");
-      out.write("\n");
+      out.write("        \n");
       out.write("        ");
       out.write("\n");
       out.write("\n");
@@ -513,22 +502,26 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("</div>\n");
       out.write("<!-- /.modal -->\n");
       out.write("\n");
-      out.write("\n");
+      out.write("        \n");
       out.write("        <script type='text/javascript'>\n");
       out.write("            \n");
       out.write("            $.jgrid.no_legacy_api = true;\n");
       out.write("            $.jgrid.useJSON = true;\n");
+      out.write("            \n");
+      out.write("            var lst = '';\n");
+      out.write("                var tbl = '';\n");
+      out.write("                var frm = '';\n");
       out.write("\n");
       out.write("            var BtnNuevo = function() {\n");
       out.write("                $.ajax({\n");
       out.write("                    type: 'POST',\n");
-      out.write("                    url: 'tblConexionServlet',\n");
+      out.write("                    url: 'UsuarioServlet',\n");
       out.write("                    dataType: 'json',\n");
       out.write("                    data: {\n");
       out.write("                        accion: \"eliminarSesion\"\n");
       out.write("                    },\n");
       out.write("                    success: function(response) {\n");
-      out.write("                        nVentana(response.mensaje, 'REGISTRO DE NUEVO CLIENTE', '700')\n");
+      out.write("                        nVentana(response.mensaje, 'REGISTRO DE NUEVO USUARIO', '700')\n");
       out.write("                    }\n");
       out.write("                })\n");
       out.write("            };\n");
@@ -537,7 +530,7 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("                if (lst != '') {\n");
       out.write("                    tbl.jqGrid('setGridParam',\n");
       out.write("                            {\n");
-      out.write("                                url: './tblConexionServlet?accion=buscar&txtApe_Paterno=' + $('#txtBuscar').val()\n");
+      out.write("                                url: './UsuarioServlet?accion=buscar&txtUsuario=' + $('#txtBuscar').val()\n");
       out.write("                            }\n");
       out.write("                    ).trigger('reloadGrid');\n");
       out.write("                }\n");
@@ -550,14 +543,14 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("                    var fila = $(\"#list\").jqGrid('getRowData', rowId);\n");
       out.write("                    $.ajax({\n");
       out.write("                        type: 'POST',\n");
-      out.write("                        url: 'tblConexionServlet',\n");
+      out.write("                        url: 'UsuarioServlet',\n");
       out.write("                        dataType: 'json',\n");
       out.write("                        data: {\n");
       out.write("                            accion : 'obtenerPorId',\n");
       out.write("                            id: fila.ID\n");
       out.write("                        },\n");
       out.write("                        success: function(response){\n");
-      out.write("                            nVentana(response.mensaje,'Actualizar cliente','700')\n");
+      out.write("                            nVentana(response.mensaje,'ACTUALIZAR USUARIO','700')\n");
       out.write("                        }\n");
       out.write("                        \n");
       out.write("                    })\n");
@@ -576,7 +569,7 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("                if (rowId) {\n");
       out.write("                    var fila = $(\"#list\").jqGrid('getRowData', rowId);\n");
       out.write("\n");
-      out.write("                    var sUrl = './tblConexionServlet?accion=eliminar&id=' + fila.ID;\n");
+      out.write("                    var sUrl = './UsuarioServlet?accion=eliminar&txtId=' + fila.ID;\n");
       out.write("                    var jqxhr = $.getJSON(sUrl);\n");
       out.write("\n");
       out.write("                    jqxhr.success(function(json) {\n");
@@ -611,14 +604,17 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("\n");
       out.write("            var tblEstructura = function() {\n");
       out.write("                lst = tbl.jqGrid({\n");
-      out.write("                    url: './tblConexionServlet?accion=buscar',\n");
+      out.write("                    url: './UsuarioServlet?accion=buscar',\n");
       out.write("                    datatype: 'json',\n");
       out.write("                    mtype: 'POST',\n");
       out.write("                    colNames: [\n");
       out.write("                        'Id',\n");
+      out.write("                        'Usuario',\n");
+      out.write("                        'Pwd',\n");
       out.write("                        'Nombres',\n");
-      out.write("                        'Apellido Paterno',\n");
-      out.write("                        'Apellido Materno'\n");
+      out.write("                        'Apellidos',\n");
+      out.write("                        'Email',\n");
+      out.write("                        'Estado'\n");
       out.write("                    ],\n");
       out.write("                    colModel: [\n");
       out.write("                        {\n");
@@ -626,25 +622,40 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("                            index: '1'\n");
       out.write("                        },\n");
       out.write("                        {\n");
-      out.write("                            name: 'NOMBRE',\n");
+      out.write("                            name: 'USUARIO',\n");
       out.write("                            index: '2',\n");
       out.write("                            align: 'center'\n");
       out.write("                        },\n");
       out.write("                        {\n");
-      out.write("                            name: 'APE_PATERNO',\n");
+      out.write("                            name: 'PWD',\n");
       out.write("                            index: '3',\n");
       out.write("                            align: 'center'\n");
       out.write("                        },\n");
       out.write("                        {\n");
-      out.write("                            name: 'APE_MATERNO',\n");
+      out.write("                            name: 'NOMBRES',\n");
       out.write("                            index: '4',\n");
+      out.write("                            align: 'center'\n");
+      out.write("                        },\n");
+      out.write("                        {\n");
+      out.write("                            name: 'APELLIDOS',\n");
+      out.write("                            index: '5',\n");
+      out.write("                            align: 'center'\n");
+      out.write("                        },\n");
+      out.write("                        {\n");
+      out.write("                            name: 'EMAIL',\n");
+      out.write("                            index: '6',\n");
+      out.write("                            align: 'center'\n");
+      out.write("                        },\n");
+      out.write("                        {\n");
+      out.write("                            name: 'ESTADO',\n");
+      out.write("                            index: '7',\n");
       out.write("                            align: 'center'\n");
       out.write("                        }\n");
       out.write("                    ],\n");
       out.write("                    height: 300,\n");
       out.write("                    width: 940,\n");
-      out.write("                    shrinkToFit: false,\n");
-      out.write("                    rowNum: 2,\n");
+      out.write("                    shrinkToFit: true,\n");
+      out.write("                    rowNum: 20,\n");
       out.write("                    pager: $(\"#divPaginado\"),\n");
       out.write("                    viewrecords: true,\n");
       out.write("                    paging: true,\n");
@@ -653,12 +664,8 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("                        //responsive_jqgrid($(\".jqGrid\"));\n");
       out.write("                    },\n");
       out.write("                    jsonReader: {\n");
-      out.write("                        repeatitems: false,\n");
-      out.write("                        id: '0',\n");
-      out.write("                        root: 'lstLista',\n");
-      out.write("                        total: 'numPaginaciones',\n");
-      out.write("                        page: 'numPaginado',\n");
-      out.write("                        records: 'numRegistros'\n");
+      out.write("                        repeatitems: true,\n");
+      out.write("                        root: 'lstLista'\n");
       out.write("                    }\n");
       out.write("                });\n");
       out.write("\n");
@@ -672,7 +679,7 @@ public final class tblConexionLst_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("            });\n");
       out.write("\n");
       out.write("        </script>\n");
-      out.write("\n");
+      out.write("        \n");
       out.write("    </body>\n");
       out.write("</html>\n");
     } catch (Throwable t) {

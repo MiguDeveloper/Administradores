@@ -74,14 +74,14 @@ public class UsuarioDaoImpl implements UsuarioDAO{
             ps.setString(1, usuario);
             
             rs = ps.executeQuery();
-            lstUsuario = new ArrayList<UsuarioBean> ();
+            lstUsuario = new ArrayList<UsuarioBean>();
             while(rs.next()){
                 objUsuario = new UsuarioBean();
                 objUsuario.setID(rs.getInt("ID"));
                 objUsuario.setUSUARIO(rs.getString("USUARIO"));
                 objUsuario.setPWD(rs.getString("PWD"));
-                objUsuario.setNOMBRES(rs.getString("NOMBRE"));
-                objUsuario.setAPELLIDOS(rs.getString("APELLIDO"));
+                objUsuario.setNOMBRES(rs.getString("NOMBRES"));
+                objUsuario.setAPELLIDOS(rs.getString("APELLIDOS"));
                 objUsuario.setEMAIL(rs.getString("EMAIL"));
                 objUsuario.setESTADO(rs.getInt("ESTADO"));
                 lstUsuario.add(objUsuario);
@@ -185,6 +185,40 @@ public class UsuarioDaoImpl implements UsuarioDAO{
             con.cerrarConexion(cn);
         }
         return usuario;
+    }
+
+    @Override
+    public UsuarioBean login_usuario(String usuario, String pwd) {
+        logger.info("Login");
+        sql = "CALL SP_LOGIN_USUARIO(?,?)";
+        
+        UsuarioBean objUsuario = null;
+        
+        try{
+            con =  new Conexion();
+            cn = con.getConexion();
+            
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, usuario);
+            ps.setString(2, pwd);
+            
+            rs = ps.executeQuery();
+            while(rs.next()){
+                objUsuario = new UsuarioBean();
+                objUsuario.setID(rs.getInt("ID"));
+                objUsuario.setUSUARIO(rs.getString("USUARIO"));
+                objUsuario.setPWD(rs.getString("PWD"));
+                objUsuario.setNOMBRES(rs.getString("NOMBRES"));
+                objUsuario.setAPELLIDOS(rs.getString("APELLIDOS"));
+                objUsuario.setEMAIL(rs.getString("EMAIL"));
+                objUsuario.setESTADO(rs.getInt("ESTADO"));
+            }
+        }catch(Exception e){
+            logger.error("Error al logearse: " + e.getMessage());
+        }finally{
+            con.cerrarConexion(cn);
+        }
+        return objUsuario;
     }
     
 }

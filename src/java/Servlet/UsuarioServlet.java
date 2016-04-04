@@ -60,6 +60,10 @@ public class UsuarioServlet extends HttpServlet {
                 obtenerPorId(request, response);
                 return;
             }
+            if (accion.equals("login")) {
+                login(request, response);
+                return;
+            }
             if (accion.equals("eliminarSesion")) {
                 eliminarSesion(request, response);
                 return;
@@ -72,7 +76,7 @@ public class UsuarioServlet extends HttpServlet {
         logger.info("Insertar");
         sesion = request.getSession();
 
-        sesion.removeAttribute("actualizaUsuario");
+        sesion.removeAttribute("actualizarUsuario");
 
         String user = request.getParameter("txtUsuario") == null ? "" : request.getParameter("txtUsuario");
         String pwd = request.getParameter("txtPwd") == null ? "" : request.getParameter("txtPwd");
@@ -126,7 +130,7 @@ public class UsuarioServlet extends HttpServlet {
         logger.info("Buscar");
 
         sesion = request.getSession();
-        sesion.removeAttribute("actualizaUsuario");
+        sesion.removeAttribute("actualizarUsuario");
 
         String usuario = request.getParameter("txtUsuario") == null ? "" : request.getParameter("txtUsuario");
 
@@ -152,7 +156,7 @@ public class UsuarioServlet extends HttpServlet {
         logger.info("Actualizando");
 
         sesion = request.getSession();
-        sesion.removeAttribute("actualizaUsuario");
+        sesion.removeAttribute("actualizarUsuario");
 
         int id = Integer.parseInt(request.getParameter("txtId"));
         String user = request.getParameter("txtUsuario") == null ? "" : request.getParameter("txtUsuario");
@@ -207,7 +211,7 @@ public class UsuarioServlet extends HttpServlet {
         logger.info("Eliminar");
 
         sesion = request.getSession();
-        sesion.removeAttribute("actualizaUsuario");
+        sesion.removeAttribute("actualizarUsuario");
 
         int id = Integer.parseInt(request.getParameter("txtId"));
         gson = new Gson();
@@ -239,7 +243,7 @@ public class UsuarioServlet extends HttpServlet {
         try {
             usuarioService = new UsuarioServiceImpl();
             usuario = usuarioService.obtenerPorId(id);
-            sesion.removeAttribute("actualizaUsuario");
+            sesion.removeAttribute("actualizarUsuario");
             sesion.setAttribute("actualizarUsuario", usuario);
 
             /* -----RETORNAMOS EL MENSAJE ENVIADO DEL SERVIDOR----- */
@@ -257,11 +261,52 @@ public class UsuarioServlet extends HttpServlet {
         }
     }
 
+    protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("Logeandose");
+        sesion = request.getSession();
+
+        sesion.removeAttribute("actualizarUsuario");
+        sesion.removeAttribute("login");
+
+        String user = request.getParameter("inputUsuario") == null ? "" : request.getParameter("inputUsuario");
+        String pwd = request.getParameter("inputPassword") == null ? "" : request.getParameter("inputPassword");
+
+        usuario = null;
+
+        try {
+            usuarioService = new UsuarioServiceImpl();
+            usuario = usuarioService.login_usuario(user, pwd);
+
+            String msgLogin = "";
+
+            if (usuario == null) {
+                msgLogin = "denegado";
+            } else {
+                msgLogin = "aceptado";
+                sesion.removeAttribute("login");
+                sesion.setAttribute("login", usuario);
+            }
+
+            /* -----RETORNAMOS EL MENSAJE ENVIADO DEL SERVIDOR----- */
+            Map<String, String> Mensaje = new LinkedHashMap<String, String>();
+            Mensaje.put("mensaje", msgLogin);
+            String json_data = null;
+            json_data = new Gson().toJson(Mensaje);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json_data);
+
+        } catch (Exception e) {
+            logger.error("Error al hacer login: " + e.getMessage());
+        }
+    }
+
     protected void eliminarSesion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("eliminado sesion");
         sesion = request.getSession();
 
-        sesion.removeAttribute("actualizaUsuario");
+        sesion.removeAttribute("actualizarUsuario");
 
         /* -----RETORNAMOS EL MENSAJE ENVIADO DEL SERVIDOR----- */
         Map<String, String> Mensaje = new LinkedHashMap<String, String>();

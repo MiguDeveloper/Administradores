@@ -1,23 +1,19 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% 
-    if(session.getAttribute("login") == null){
+<%
+    if (session.getAttribute("login") == null) {
         response.sendRedirect("login.jsp");
     }
-    %>
+%>
 <!DOCTYPE html>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Lista de clientes</title>
-
+        <title>Lista de usuarios</title>
         <%@include file="metas_y_css.jsp" %>
-
     </head>
     <body>
-
         <%@include file="includes/nav_sup.jsp" %>
-
 
         <!--Start Container-->
         <div id="main" class="container-fluid">
@@ -36,7 +32,7 @@
                             </a>
                             <ol class="breadcrumb pull-left">
                                 <li><a href="index.html">Home</a></li>
-                                <li><a href="#">Primera tabla</a></li>
+                                <li><a href="#">Lista de usuarios</a></li>
                             </ol>
                         </div>
                     </div>
@@ -115,53 +111,58 @@
         </div>
         <!--End Container-->
 
-
         <%@include file="librerias_javascript.jsp" %>
 
         <script type='text/javascript'>
             
             $.jgrid.no_legacy_api = true;
             $.jgrid.useJSON = true;
-
+            
+            var lst = '';
+            var tbl = '';
+            var frm = '';
+            
             var BtnNuevo = function() {
                 $.ajax({
                     type: 'POST',
-                    url: 'tblConexionServlet',
+                    url: 'UsuarioServlet',
                     dataType: 'json',
                     data: {
                         accion: "eliminarSesion"
                     },
                     success: function(response) {
-                        nVentana(response.mensaje, 'REGISTRO DE NUEVO CLIENTE', '700')
+                        nVentana(response.mensaje, 'REGISTRO DE NUEVO USUARIO', '700')
                     }
                 })
             };
-
+            
             var buscar = function() {
                 if (lst != '') {
                     tbl.jqGrid('setGridParam',
                             {
-                                url: './tblConexionServlet?accion=buscar&txtApe_Paterno=' + $('#txtBuscar').val()
+                                url: './UsuarioServlet?accion=buscar&txtUsuario=' + $('#txtBuscar').val()
                             }
                     ).trigger('reloadGrid');
                 }
             };
-
+            
+            
+            
             var BtnActualizar = function() {
                 var rowId = $("#list").jqGrid('getGridParam', 'selrow');
-
+                
                 if (rowId) {
                     var fila = $("#list").jqGrid('getRowData', rowId);
                     $.ajax({
                         type: 'POST',
-                        url: 'tblConexionServlet',
+                        url: 'UsuarioServlet',
                         dataType: 'json',
                         data: {
-                            accion : 'obtenerPorId',
-                            id: fila.ID
+                            accion: 'obtenerPorId',
+                            txtID: fila.ID
                         },
-                        success: function(response){
-                            nVentana(response.mensaje,'Actualizar cliente','700')
+                        success: function(response) {
+                            nVentana(response.mensaje, 'ACTUALIZAR USUARIO', '700')
                         }
                         
                     })
@@ -173,35 +174,35 @@
                     }, 1000);
                 }
             }
-
+            
             var del = function() {
                 var rowId = $("#list").jqGrid('getGridParam', 'selrow');
-
+                
                 if (rowId) {
                     var fila = $("#list").jqGrid('getRowData', rowId);
-
-                    var sUrl = './tblConexionServlet?accion=eliminar&id=' + fila.ID;
+                    
+                    var sUrl = './UsuarioServlet?accion=eliminar&txtId=' + fila.ID;
                     var jqxhr = $.getJSON(sUrl);
-
+                    
                     jqxhr.success(function(json) {
                         buscar();
                         $('#modal-message').modal('hide');
-
+                        
                         $('#ok').show("fast");
                         $('#ok').html("ELIMINADO CON EXITO!");
                         setTimeout(function() {
                             $('#ok').hide("fast");
                         }, 1000);
                     });
-
+                    
                     jqxhr.error(function() {
                         $('#error').show("fast");
                         $('#error').html("ERROR EJECUTANDO EL PROCESO!");
                         setTimeout(function() {
                             $('#error').hide("fast");
                         }, 1000);
-
-
+                        
+                        
                     });
                 } else {
                     $('#error').show("fast");
@@ -210,19 +211,22 @@
                         $('#error').hide("fast");
                     }, 1000);
                 }
-
+                
             };
-
+            
             var tblEstructura = function() {
                 lst = tbl.jqGrid({
-                    url: './tblConexionServlet?accion=buscar',
+                    url: './UsuarioServlet?accion=buscar',
                     datatype: 'json',
                     mtype: 'POST',
                     colNames: [
                         'Id',
+                        'Usuario',
+                        'Pwd',
                         'Nombres',
-                        'Apellido Paterno',
-                        'Apellido Materno'
+                        'Apellidos',
+                        'Email',
+                        'Estado'
                     ],
                     colModel: [
                         {
@@ -230,51 +234,68 @@
                             index: '1'
                         },
                         {
-                            name: 'NOMBRE',
+                            name: 'USUARIO',
                             index: '2',
                             align: 'center'
                         },
                         {
-                            name: 'APE_PATERNO',
+                            name: 'PWD',
                             index: '3',
                             align: 'center'
                         },
                         {
-                            name: 'APE_MATERNO',
+                            name: 'NOMBRES',
                             index: '4',
+                            align: 'center'
+                        },
+                        {
+                            name: 'APELLIDOS',
+                            index: '5',
+                            align: 'center'
+                        },
+                        {
+                            name: 'EMAIL',
+                            index: '6',
+                            align: 'center'
+                        },
+                        {
+                            name: 'ESTADO',
+                            index: '7',
                             align: 'center'
                         }
                     ],
                     height: 300,
                     width: 940,
-                    shrinkToFit: false,
-                    rowNum: 2,
-                    pager: $("#divPaginado"),
+                    shrinkToFit: true,
+                    rowNum: 20,
+                    loadOnce: true,
                     viewrecords: true,
-                    paging: true,
-                    caption: 'Listado General de usuarios',
+                    gridview: true,
+                    caption: 'LISTADO GENERAL DE USUARIOS',
                     beforeRequest: function() {
                         //responsive_jqgrid($(".jqGrid"));
                     },
                     jsonReader: {
-                        repeatitems: false,
-                        id: '0',
-                        root: 'lstLista',
-                        total: 'numPaginaciones',
-                        page: 'numPaginado',
-                        records: 'numRegistros'
+                        repeatitems: true,
+                        root: 'lstLista'
                     }
                 });
-
+                
             };
-
+            
             $(document).ready(function() {
                 
                 tbl = $('#list');
                 frm = $('#frmBusqueda');
                 tblEstructura();
+                
+                frm.validate({
+                    submitHandler: function(form) {
+                        buscar();
+                    }
+                });
             });
-
+            
         </script>
 
     </body>
