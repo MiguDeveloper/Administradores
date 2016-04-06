@@ -67,7 +67,7 @@
                                 <div class="box-content">
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <div class="alert alert-success" role="alert">${msgEstandares}</div>
+                                            <div class="alert alert-success" role="alert">${msgCargaMasiva}</div>
                                         </div>
                                     </div>
                                 </div>

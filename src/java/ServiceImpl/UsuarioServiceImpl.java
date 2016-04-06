@@ -50,11 +50,5 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuarioDAO = new UsuarioDaoImpl();
         return usuarioDAO.login_usuario(usuario, pwd);
     }
-
-    @Override
-    public int cargaMasivaUsers(String direccion) {
-        usuarioDAO = new UsuarioDaoImpl();
-        return usuarioDAO.cargaMasivaUsers(direccion);
-    }
     
 }

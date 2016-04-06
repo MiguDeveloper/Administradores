@@ -77,7 +77,7 @@
 
                                             <!-- formulario LOAD -->
                                             <div class="col-md-12" style="margin-bottom:1%; margin-top:1%;">
-                                                <div class="alert alert-success" role="alert">${msgEstandares}</div>
+                                                <div class="alert alert-success" role="alert">${msgCargaMasiva}</div>
                                                 <button type="button" class="btn btn-success btn-xs" onclick="guardarMasivoUsers()">
                                                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Confirmar usuarios</button>
                                                 <button type="button" class="btn btn-default btn-xs" onclick="cancelar()">

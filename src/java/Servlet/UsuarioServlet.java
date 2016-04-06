@@ -385,9 +385,9 @@ public class UsuarioServlet extends HttpServlet {
         
         sesion = request.getSession();
         sesion.removeAttribute("usuariosImportados");
-        sesion.removeAttribute("msgEstandares");
+        sesion.removeAttribute("msgCargaMasiva");
         ////////////////////////////////////////////////////////
-        sesion.setAttribute("msgEstandares", msg);
+        sesion.setAttribute("msgCargaMasiva", msg);
         sesion.setAttribute("usuariosImportados", readExcel(ruta));
         response.sendRedirect("lee-importado.jsp");
         
@@ -420,7 +420,7 @@ public class UsuarioServlet extends HttpServlet {
             }
             workbook.close();
         } catch (Exception e) {
-            System.out.println("readExcel ->" + e);
+            System.out.println("Error readExcel ->" + e);
         }
         return lstUsuarios;
     }
@@ -444,8 +444,8 @@ public class UsuarioServlet extends HttpServlet {
             }
             sesion = request.getSession();
             sesion.removeAttribute("usuariosImportados");
-            sesion.removeAttribute("msgEstandares");
-            sesion.setAttribute("msgEstandares", "<strong>Listo</strong>, usuarios subidos correctamente");
+            sesion.removeAttribute("msgCargaMasiva");
+            sesion.setAttribute("msgCargaMasiva", "<strong>Listo</strong>, usuarios subidos correctamente");
             if(flgOperacion>0){
                 mensaje = "Usuarios subidos correctamente";
             }else{
