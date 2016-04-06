@@ -220,5 +220,35 @@ public class UsuarioDaoImpl implements UsuarioDAO{
         }
         return objUsuario;
     }
+
+    @Override
+    public int cargaMasivaUsers(String direccion) {
+        logger.info("Carga masiva");
+        
+        
+        sql = "LOAD DATA LOCAL INFILE '" + direccion 
+                + "' INTO TABLE USUARIO "
+                + "FIELDS TERMINATED BY ';' " 
+                + "LINES TERMINATED BY '\r' IGNORE 1 LINES "
+                + "(USUARIO,PWD,NOMBRES,APELLIDOS,EMAIL) SET ESTADO=1";
+        try{
+            con = new Conexion();
+            cn = con.getConexion();
+            cn.setAutoCommit(false);
+            
+            ps = cn.prepareStatement(sql);
+            
+            flgOperacion = ps.executeUpdate();
+            if(flgOperacion>0){
+                cn.commit();
+            }else{
+                cn.rollback();
+            }
+        }catch(Exception e){
+            logger.error("Error carga masiva: " + e.getMessage());
+        }
+        
+        return flgOperacion;
+    }
     
 }

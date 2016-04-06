@@ -4,16 +4,25 @@ import Bean.UsuarioBean;
 import Service.UsuarioService;
 import ServiceImpl.UsuarioServiceImpl;
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import jxl.Sheet;
+import jxl.Workbook;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import org.apache.log4j.Logger;
 import util.ResultadoJson;
 
@@ -64,8 +73,16 @@ public class UsuarioServlet extends HttpServlet {
                 login(request, response);
                 return;
             }
-            if(accion.equals("cerrarSesion")){
-                cerrarSesion(request,response);
+            if (accion.equals("cerrarSesion")) {
+                cerrarSesion(request, response);
+                return;
+            }
+            if (accion.equals("ImportaExcel")) {
+                importaExcel(request, response);
+                return;
+            }
+            if(accion.equals("guardarExcel")){
+                guardarExcel(request, response);
                 return;
             }
             if (accion.equals("eliminarSesion")) {
@@ -309,19 +326,135 @@ public class UsuarioServlet extends HttpServlet {
             logger.error("Error al hacer login: " + e.getMessage());
         }
     }
-    
+
     protected void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("Cerrando sesion");
         sesion = request.getSession();
-        
-        try{
+
+        try {
             sesion.removeAttribute("login");
             sesion.invalidate();
             response.sendRedirect("login.jsp");
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.error("Error al cerrar sesion: " + e.getMessage());
         }
+
+    }
+
+    protected void importaExcel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("Carga masica");
+        sesion = request.getSession();
+        sesion.removeAttribute("actualizarUsuario");
         
+        String UPLOAD_DIRECTORY = getServletContext().getRealPath("includes/archivos");
+        String ruta = null;
+        String msg = null;
+        
+        ServletOutputStream salida = response.getOutputStream();
+        salida.println(UPLOAD_DIRECTORY + "      ");
+        salida.println("antes del if   ");
+        
+        if(ServletFileUpload.isMultipartContent(request)){
+            salida.println("despues del if ");
+            try{
+                salida.println("despues del try cacht   ");
+                List<FileItem> multiparts = new ServletFileUpload(
+                        new DiskFileItemFactory()).parseRequest(request);
+                salida.println("Antes de for..");
+                for (FileItem item : multiparts) {
+                    salida.println("despues del for   ");
+                    if (!item.isFormField()) {
+                        salida.println("dentro del for despues del if  ");
+                        String name = new File(item.getName()).getName();
+                        item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
+                        ruta = UPLOAD_DIRECTORY + File.separator + name;
+                        salida.println("   ruta real   " + ruta + "    ");
+                    }
+                    salida.println("despues del if dentro del for   ");
+                }
+                msg = "Lista de usuarios cargo con Exito";
+                salida.println(msg);
+            }catch(Exception e){
+                msg = "Error " + e;
+                salida.println(msg);
+            }
+        }else{
+            msg = "No se puede cargar";
+            salida.println(msg);
+        }
+        
+        sesion = request.getSession();
+        sesion.removeAttribute("usuariosImportados");
+        sesion.removeAttribute("msgEstandares");
+        ////////////////////////////////////////////////////////
+        sesion.setAttribute("msgEstandares", msg);
+        sesion.setAttribute("usuariosImportados", readExcel(ruta));
+        response.sendRedirect("lee-importado.jsp");
+        
+    }
+    
+    public List<UsuarioBean> readExcel(String excel_file) {
+        List<UsuarioBean> lstUsuarios = null;
+        lstUsuarios = new ArrayList<UsuarioBean>();
+        try {
+            Workbook workbook = Workbook.getWorkbook(new File(excel_file));
+            //Gets the sheet
+            Sheet sheet = workbook.getSheet(0);//el cero indica que es la hoja nro 1
+
+            for (int x = 1; x < sheet.getRows(); x++) {
+                jxl.Cell user = sheet.getCell(0, x);
+                jxl.Cell pwd = sheet.getCell(1, x);
+                jxl.Cell nombre = sheet.getCell(2, x);
+                jxl.Cell apellido = sheet.getCell(3, x);
+                jxl.Cell email = sheet.getCell(4, x);
+
+                usuario = new UsuarioBean();
+                
+                usuario.setUSUARIO(user.getContents());
+                usuario.setPWD(pwd.getContents());
+                usuario.setNOMBRES(nombre.getContents());
+                usuario.setAPELLIDOS(apellido.getContents());
+                usuario.setEMAIL(email.getContents());
+                usuario.setESTADO(1);
+                lstUsuarios.add(usuario);
+            }
+            workbook.close();
+        } catch (Exception e) {
+            System.out.println("readExcel ->" + e);
+        }
+        return lstUsuarios;
+    }
+    
+    protected void guardarExcel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("Guardando excel");
+        sesion = request.getSession();
+        sesion.removeAttribute("actualizarUsuario");
+        
+        try{
+            if(sesion.getAttribute("usuariosImportados") != null){
+                List<UsuarioBean> lstUsuarios = (List<UsuarioBean>) sesion.getAttribute("usuariosImportados");
+                for(int i=0; i<lstUsuarios.size(); i++){
+                    usuario = new UsuarioBean();
+                    usuario = lstUsuarios.get(i);
+                    usuario.setESTADO(1);
+                    
+                    usuarioService = new UsuarioServiceImpl();
+                    flgOperacion = usuarioService.insertar(usuario);
+                }
+            }
+            sesion = request.getSession();
+            sesion.removeAttribute("usuariosImportados");
+            sesion.removeAttribute("msgEstandares");
+            sesion.setAttribute("msgEstandares", "<strong>Listo</strong>, usuarios subidos correctamente");
+            if(flgOperacion>0){
+                mensaje = "Usuarios subidos correctamente";
+            }else{
+                mensaje = "Error al subir los usuarios";
+            }
+            response.sendRedirect("carga-masiva-correcta.jsp");
+        }catch(Exception e){
+            logger.error("Error al guardar excel: " + e.getMessage());
+        }
     }
 
     protected void eliminarSesion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

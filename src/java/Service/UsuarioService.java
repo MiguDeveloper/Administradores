@@ -17,4 +17,5 @@ public interface UsuarioService {
     public UsuarioBean obtenerPorId(int id);
     
     public UsuarioBean login_usuario(String usuario, String pwd);
+    public int cargaMasivaUsers(String direccion);
 }

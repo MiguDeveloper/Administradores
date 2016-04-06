@@ -20,6 +20,8 @@
 
 <!-- jqGrid and jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="plugins/jqueryvalidate/jquery.validate.min.js"></script>
+<script src="plugins/jqueryvalidate/additional-methods.min.js"></script>
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 
 <!-- jqGrid -->
