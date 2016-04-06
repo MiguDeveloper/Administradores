@@ -1,11 +1,12 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% 
-    if(session.getAttribute("login") == null){
+
+<%    
+    if (session.getAttribute("login") == null) {
         response.sendRedirect("login.jsp");
     }
-    %>
-<!DOCTYPE html>
+%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -119,7 +120,7 @@
         <%@include file="librerias_javascript.jsp" %>
 
         <script type='text/javascript'>
-            
+
             $.jgrid.no_legacy_api = true;
             $.jgrid.useJSON = true;
 
@@ -157,13 +158,13 @@
                         url: 'tblConexionServlet',
                         dataType: 'json',
                         data: {
-                            accion : 'obtenerPorId',
+                            accion: 'obtenerPorId',
                             id: fila.ID
                         },
-                        success: function(response){
-                            nVentana(response.mensaje,'Actualizar cliente','700')
+                        success: function(response) {
+                            nVentana(response.mensaje, 'Actualizar cliente', '700')
                         }
-                        
+
                     })
                 } else {
                     $('#error').show("fast");
@@ -269,7 +270,7 @@
             };
 
             $(document).ready(function() {
-                
+
                 tbl = $('#list');
                 frm = $('#frmBusqueda');
                 tblEstructura();

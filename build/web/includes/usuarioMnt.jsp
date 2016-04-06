@@ -1,11 +1,12 @@
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="Bean.UsuarioBean" %>
 <%
-    if(session.getAttribute("login") == null){
+    if (session.getAttribute("login") == null) {
         response.sendRedirect("login.jsp");
     }
-    %>
+%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Bean.UsuarioBean" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,7 +27,7 @@
             String email = usuario.getEMAIL() == null ? "" : usuario.getEMAIL();
 
             String tipoAccion = "";
-            
+
             if (session.getAttribute("actualizarUsuario") != null) {
                 tipoAccion = "actualizar";
             } else {
@@ -78,7 +79,7 @@
 
 
         <%@include file="js.jsp" %>
-        
+
         <script type='text/javascript'>
             function BtnCancelar() {
                 window.parent.cierra();
@@ -87,18 +88,18 @@
             $(document).ready(function() {
                 $("#frmUsuarios").validate({
                     rules: {
-                        txtUser : {required: true},
-                        txtPwd : {required: true},
-                        txtNombre : {required: true},
-                        txtApellidos : {required: true},
-                        txtEmail : {required: true, email: true}
+                        txtUser: {required: true},
+                        txtPwd: {required: true},
+                        txtNombre: {required: true},
+                        txtApellidos: {required: true},
+                        txtEmail: {required: true, email: true}
                     },
                     messages: {
-                        txtUser : 'El usuario es obligatorio',
-                        txtPwd : 'El password es obligatorio',
-                        txtNombre : 'El nombre es obligatorio',
-                        txtApellidos : 'El A. paterno es obligatorio',
-                        txtEmail : {required: 'El email es obligatorio', email: 'Ingrese un email valido'}
+                        txtUser: 'El usuario es obligatorio',
+                        txtPwd: 'El password es obligatorio',
+                        txtNombre: 'El nombre es obligatorio',
+                        txtApellidos: 'El A. paterno es obligatorio',
+                        txtEmail: {required: 'El email es obligatorio', email: 'Ingrese un email valido'}
                     },
                     submitHandler: function(form) {
                         $.ajax({
@@ -107,12 +108,12 @@
                             dataType: 'json',
                             data: {
                                 accion: $("#txtAccion").val(),
-                                txtId : <%=id%>,
-                                txtUsuario : $("#txtUser").val(),
-                                txtPwd : $("#txtPwd").val(),
-                                txtNombres : $("#txtNombre").val(),
-                                txtApellidos : $("#txtApellidos").val(),
-                                txtEmail : $("#txtEmail").val(),
+                                txtId: <%=id%>,
+                                txtUsuario: $("#txtUser").val(),
+                                txtPwd: $("#txtPwd").val(),
+                                txtNombres: $("#txtNombre").val(),
+                                txtApellidos: $("#txtApellidos").val(),
+                                txtEmail: $("#txtEmail").val(),
                             },
                             success: function(response) {
                                 if (response.estadoOperacion == '1' && response.tipo_proceso == 'insertar') {
@@ -128,7 +129,7 @@
                                     setTimeout(function() {
                                         $('#ok').hide("fast");
                                     }, 1000);
-                                    
+
                                     window.parent.buscar();
                                 } else {
                                     $('#error').show("fast");
@@ -144,6 +145,6 @@
                 });
             });
         </script>
-        
+
     </body>
 </html>

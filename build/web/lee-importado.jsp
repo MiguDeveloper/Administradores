@@ -4,15 +4,15 @@
     Author     : miguelchinchay
 --%>
 
-
-<%@page import="java.util.List"%>
-<%@page import="Bean.UsuarioBean" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%    if (session.getAttribute("login") == null) {
+<%    
+    if (session.getAttribute("login") == null) {
         response.sendRedirect("login.jsp");
     }
 %>
 
+<%@page import="java.util.List"%>
+<%@page import="Bean.UsuarioBean" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,7 +23,7 @@
     </head>
     <body>
         <%@include file="includes/nav_sup.jsp" %>
-        
+
         <!--Start Container-->
         <div id="main" class="container-fluid">
             <div class="row">
@@ -143,10 +143,10 @@
         <%@include file="librerias_javascript.jsp" %>
         <script type="text/javascript">
 
-            function guardarMasivoUsers(){
+            function guardarMasivoUsers() {
                 document.location = "UsuarioServlet?accion=guardarExcel";
             }
-            function cancelar(){
+            function cancelar() {
                 document.location = "cargar-usuarios.jsp";
             }
         </script>
